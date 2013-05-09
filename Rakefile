@@ -12,8 +12,6 @@ def tempdir
   end
 end
 
-task :default => "pkg/ruby-#{VERSION}.pkg"
-
 file "pkg/ruby-#{VERSION}.pkg" => "/usr/local/heroku/ruby" do |t|
   tempdir do |dir|
     cp_r t.prerequisites.first, "#{dir}/ruby"
@@ -47,3 +45,6 @@ end
 file "/usr/local/heroku/ruby" do |t|
   sh "vendor/ruby-build/bin/ruby-build #{VERSION} #{t.name}"
 end
+
+task "build:ruby" => "/usr/local/stackmob/ruby"
+task :default => "pkg/ruby-#{VERSION}.pkg"

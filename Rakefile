@@ -12,7 +12,7 @@ def tempdir
   end
 end
 
-file "pkg/ruby-#{VERSION}.pkg" => "/usr/local/heroku/ruby" do |t|
+file "pkg/ruby-#{VERSION}.pkg" => "/usr/local/stackmob/ruby" do |t|
   tempdir do |dir|
     cp_r t.prerequisites.first, "#{dir}/ruby"
 
@@ -42,8 +42,8 @@ file "pkg/ruby-#{VERSION}.pkg" => "/usr/local/heroku/ruby" do |t|
   end
 end
 
-file "/usr/local/heroku/ruby" do |t|
-  sh "vendor/ruby-build/bin/ruby-build #{VERSION} #{t.name}"
+file "/usr/local/stackmob/ruby" do |t|
+  sh "CFLAGS=\"-mmacosx-version-min=10.4\" vendor/ruby-build/bin/ruby-build #{VERSION} #{t.name}"
 end
 
 task "build:ruby" => "/usr/local/stackmob/ruby"
